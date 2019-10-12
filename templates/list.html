@@ -1,9 +1,11 @@
 {{define "content"}}
   {{range .Quotes}}
   <div style="margin-bottom: 16px; background-color: whitesmoke;">
-    <p>Citerad: {{.Quoted}}</p>
-    <p>{{.Quote}}</p>
-    <p>Av: {{.CreatedBy}} ({{.CreatedAt}})</p>
+    Citerad: {{.Quoted}}
+    <br>
+    {{.Quote}}
+    <br>
+    Av: {{.CreatedBy}} ({{.CreatedAt}})
   </div>
   {{end}}
 {{end}}

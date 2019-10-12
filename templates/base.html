@@ -8,16 +8,18 @@
   <title>Holger Sitat</title>
 </head>
 
-<body>
-  <header style="background-color: #23004C;">
-    <div style="max-width: 700px; margin: 0 auto;">
-      <img src="/static/logga-white-trans.png" alt="Logga">
-      <h1 style="color: white;">Citat</h1>
+<body style="background-color: #CCCBD6; margin: 0;">
+  <nav style="background-color: #23004C; text-align: center;">
+    <div style="max-width: 700px; margin: 0 auto; display: flex; justify-content: center;">
+      <div style="display: inline-block; padding: 8px 0;">
+        <img src="/static/logga-white-trans.png" alt="Logga" style="width: 139px; height: 75px;">
+      </div>
+      <h1 style="color: white; display: inline; margin-left: 8px;"> - Citat</h1>
     </div>
-  </header>
-  <div style="max-width: 700px; margin: 0 auto;">
+  </nav>
+  <main style="max-width: 700px; margin: 0 auto; background-color: #F7F7F7; padding: 16px;">
     {{template "content" .}}
-  </div>
+  </main>
 
 </body>
 
