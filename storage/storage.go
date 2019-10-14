@@ -1,10 +1,9 @@
 package storage
 
 type QuoteInfo struct {
-	CreatedAt string
-	CreatedBy string
-	Quote     string
-	Quoted    string
+	Who   string
+	When  string
+	Quote string
 }
 
 type Store interface {
@@ -19,9 +18,9 @@ type MemoryStorage struct {
 func NewMemoryStorage() *MemoryStorage {
 	return &MemoryStorage{
 		quotes: []QuoteInfo{
-			{CreatedAt: "Igår", CreatedBy: "Ingen", Quote: "Hejsan", Quoted: "Johan"},
-			{CreatedAt: "Idag", CreatedBy: "Jag", Quote: "Det var en gång", Quoted: "Astrid"},
-			{CreatedAt: "Imon", CreatedBy: "Någon annan", Quote: "All makt åt Tengil", Quoted: "Jonatan"},
+			{When: "Igår", Quote: "Hejsan", Who: "Johan"},
+			{When: "Idag", Quote: "Det var en gång", Who: "Astrid"},
+			{When: "Imon", Quote: "All makt åt Tengil", Who: "Jonatan"},
 		},
 	}
 }

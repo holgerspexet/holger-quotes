@@ -1,15 +1,15 @@
 package create
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/holgerspexet/holger-quotes/storage"
 )
 
-func CreateHandler(storage.Store) http.HandlerFunc {
+func CreateHandler(store storage.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		switch req.Method {
 		case "POST":
@@ -18,7 +18,11 @@ func CreateHandler(storage.Store) http.HandlerFunc {
 				return
 			}
 
-			fmt.Printf("%s", req.Form)
+			store.Store(storage.QuoteInfo{
+				Who:   strings.Join(req.Form["who"], ""),
+				Quote: strings.Join(req.Form["quote"], ""),
+				When:  strings.Join(req.Form["when"], ""),
+			})
 			http.Redirect(w, req, "/", http.StatusSeeOther)
 		case "GET":
 			// TODO investigate how these paths works
