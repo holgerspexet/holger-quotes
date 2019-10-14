@@ -1,0 +1,22 @@
+{{define "content"}}
+  <form action="/ny" method="POST">
+    <div>
+      <label for="who">Vem?</label>
+      <input id="who" name="quoted">
+    </div>
+
+    <div>
+      <label for="when">När?</label>
+      <input id="when" name="when">
+    </div>
+
+    <div>
+      <label for="quote">Vad?</label>
+      <input id="quote" name="quote">
+    </div>
+
+    <div>
+      <button>Spara</button>
+    </div>
+  </form>
+{{end}}

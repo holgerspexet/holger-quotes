@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -11,10 +12,35 @@ func main() {
 
 	staticServer := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
 	muxer.HandleFunc("/", listHandler)
+	muxer.HandleFunc("/ny", createHandler)
 	muxer.Handle("/static/", staticServer)
 
 	log.Printf("Server running at: %d", 8080)
 	log.Fatal(http.ListenAndServe(":8080", muxer))
+}
+
+func createHandler(w http.ResponseWriter, req *http.Request) {
+	switch req.Method {
+	case "POST":
+		if err := req.ParseForm(); err != nil {
+			http.Error(w, "Unable to parse the form", http.StatusUnprocessableEntity)
+			return
+		}
+
+		fmt.Printf("%s", req.Form)
+		http.Redirect(w, req, "/", http.StatusSeeOther)
+	case "GET":
+		tmpl, err := template.ParseFiles("./templates/base.html", "./templates/new.html")
+		if err != nil {
+			log.Panic(err.Error())
+		}
+		err = tmpl.Execute(w, nil)
+		if err != nil {
+			log.Panic(err)
+		}
+	default:
+		w.WriteHeader(http.StatusNotFound)
+	}
 }
 
 func listHandler(w http.ResponseWriter, req *http.Request) {
@@ -34,7 +60,6 @@ func listHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Panic(err)
 	}
-
 }
 
 type ListPageData struct {
