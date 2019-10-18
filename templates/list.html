@@ -1,13 +1,21 @@
 {{define "content"}}
-  <a href="./ny">Citera någon</a>  
-  <hr>
-  {{range .Quotes}}
-  <div style="margin-bottom: 16px; background-color: whitesmoke;">
-    {{.Quote}}
-    <br>
-    Citerad: {{.Who}}
-    <br>
-    Var/När: {{.Where}} ({{.When.Format "02-01-2006 15:04:05"}})
+  <div class="fixed bg-white page-width w-1/1 text-center text-purple" style="margin-top: -16px; padding-top: 16px">
+    <a class="text-bold" style="font-size: 24px;" href="./ny">Citera någon</a>  
+    <hr>
   </div>
-  {{end}}
+  <div style="margin-top: 36px;">
+    {{range .Quotes}}
+    <div class="bg-purple-light rounded p-1 mb-3">
+      <pre>{{.Quote}}</pre>
+      <div class="flex justify-between">
+        <span>
+          {{.Where}} ({{.Who}})
+        </span>
+        <span>
+          {{.When.Format "02-01-2006 15:04:05"}}
+        </span>
+      </div>
+    </div>
+    {{end}}
+  </div>
 {{end}}

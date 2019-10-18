@@ -6,18 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Holger Sitat</title>
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 
-<body style="background-color: #CCCBD6; margin: 0;">
-  <nav style="background-color: #23004C; text-align: center;">
-    <div style="max-width: 700px; margin: 0 auto; display: flex; justify-content: center;">
-      <div style="display: inline-block; padding: 8px 0;">
+<body class="bg-gray m-0">
+  <header class="bg-purple text-center fixed" style="top: 0; left: 0; right: 0;">
+    <div class="page-width mx-auto flex justify-center">
+      <div class="inline-block pb-2 pt-2">
         <img src="/static/logga-white-trans.png" alt="Logga" style="width: 139px; height: 75px;">
       </div>
-      <h1 style="color: white; display: inline; margin-left: 8px;"> - Citat</h1>
+      <h1 class="inline-block text-white" style="margin-left: 8px;"> - Citat</h1>
     </div>
-  </nav>
-  <main style="max-width: 700px; margin: 0 auto; background-color: #F7F7F7; padding: 16px;">
+  </header>
+  <main class="mx-auto bg-white page-width p-3" style="margin-top: 95px;">
     {{template "content" .}}
   </main>
 

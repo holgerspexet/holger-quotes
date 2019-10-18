@@ -1,21 +1,27 @@
 {{define "content"}}
-  <form action="/ny" method="POST" autocomplete="off">
-    <div>
+  <style>
+    main {
+      box-sizing: border-box;
+      height: calc(100vh - 95px);
+    }
+  </style>
+  <form class="form-box mx-auto" action="/ny" method="POST" autocomplete="off">
+    <div class="pb-2">
       <label for="quote">Citatet</label>
-      <textarea style="max-width: 100%;" id="quote" name="quote" rows="5"></textarea>
+      <textarea id="quote" name="quote" rows="5" required></textarea>
     </div>
 
-    <div>
+    <div class="pb-2">
       <label for="who">Vem sa det?</label>
-      <input id="who" name="who">
+      <input id="who" name="who" required>
     </div>
 
-    <div>
+    <div class="pb-3">
       <label for="where">Var hände det?</label>
-      <input id="where" name="where">
+      <input id="where" name="where" required>
     </div>
 
-    <div>
+    <div class="pb-3">
       <button>Publicera</button>
     </div>
   </form>
