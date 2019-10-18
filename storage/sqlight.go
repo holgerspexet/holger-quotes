@@ -3,6 +3,7 @@ package storage
 import (
 	"database/sql"
 	"log"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -27,15 +28,18 @@ func (ms SQLightStorage) Get() []QuoteInfo {
 
 	quotes := []QuoteInfo{}
 	for rows.Next() {
-		var quote string
+		var quote, who, where string
+		var when time.Time
+
 		var id int
-		err := rows.Scan(&id, &quote)
+		err := rows.Scan(&id, &quote, &who, &where, &when)
 		checkErr(err)
 
 		quotes = append(quotes, QuoteInfo{
-			Who:   "Ingen",
-			When:  "Now",
 			Quote: quote,
+			Who:   who,
+			Where: where,
+			When:  when,
 		})
 	}
 
@@ -52,11 +56,12 @@ func (ms *SQLightStorage) Store(quote QuoteInfo) {
 	tx, err := db.Begin()
 	checkErr(err)
 
-	stmt, err := tx.Prepare("INSERT INTO Quotes(Quote) values(?)")
+	// stmt, err := tx.Prepare("INSERT INTO Quotes(Quote, Who, Where, When) VALUES(?, ?, ?, ?)")
+	stmt, err := tx.Prepare("INSERT INTO Quotes(Quote, Who, Location, Time) VALUES(?, ?, ?, ?)")
 	checkErr(err)
 	defer stmt.Close()
 
-	_, err = stmt.Exec(quote.Quote)
+	_, err = stmt.Exec(quote.Quote, quote.Who, quote.Where, quote.When)
 	checkErr(err)
 
 	tx.Commit()
@@ -69,7 +74,13 @@ func connect() *sql.DB {
 
 	checkErr(db.Ping())
 
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS Quotes (Id INTEGER PRIMARY KEY, Quote text NOT NULL)")
+	_, err = db.Exec(
+		`CREATE TABLE IF NOT EXISTS Quotes (
+			Id INTEGER PRIMARY KEY,
+			Quote text NOT NULL,
+			Who text NOT NULL,
+			Location text NOT NULL,
+			Time datetime NOT NULL)`)
 	checkErr(err)
 
 	return db

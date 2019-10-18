@@ -1,22 +1,22 @@
 {{define "content"}}
   <form action="/ny" method="POST" autocomplete="off">
     <div>
-      <label for="who">Vem?</label>
+      <label for="quote">Citatet</label>
+      <textarea style="max-width: 100%;" id="quote" name="quote" rows="5"></textarea>
+    </div>
+
+    <div>
+      <label for="who">Vem sa det?</label>
       <input id="who" name="who">
     </div>
 
     <div>
-      <label for="when">När?</label>
-      <input id="when" name="when">
+      <label for="where">Var hände det?</label>
+      <input id="where" name="where">
     </div>
 
     <div>
-      <label for="quote">Vad?</label>
-      <textarea id="quote" name="quote" rows="5"></textarea>
-    </div>
-
-    <div>
-      <button>Spara</button>
+      <button>Publicera</button>
     </div>
   </form>
 {{end}}

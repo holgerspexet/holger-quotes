@@ -1,11 +1,13 @@
 {{define "content"}}
+  <a href="./ny">Citera någon</a>  
+  <hr>
   {{range .Quotes}}
   <div style="margin-bottom: 16px; background-color: whitesmoke;">
-    Citerad: {{.Who}}
-    <br>
     {{.Quote}}
     <br>
-    Av: ({{.When}})
+    Citerad: {{.Who}}
+    <br>
+    Var/När: {{.Where}} ({{.When.Format "02-01-2006 15:04:05"}})
   </div>
   {{end}}
 {{end}}

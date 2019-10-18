@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/holgerspexet/holger-quotes/storage"
 )
@@ -22,9 +23,10 @@ func CreateHandler(store storage.Store) http.HandlerFunc {
 			}
 
 			store.Store(storage.QuoteInfo{
-				Who:   strings.Join(req.Form["who"], ""),
 				Quote: strings.Join(req.Form["quote"], ""),
-				When:  strings.Join(req.Form["when"], ""),
+				Who:   strings.Join(req.Form["who"], ""),
+				Where: strings.Join(req.Form["where"], ""),
+				When:  time.Now(),
 			})
 			http.Redirect(w, req, "/", http.StatusSeeOther)
 		case "GET":
