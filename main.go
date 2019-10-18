@@ -13,7 +13,7 @@ var store storage.Store
 
 func main() {
 	muxer := http.NewServeMux()
-	store = storage.NewMemoryStorage()
+	store = storage.NewSQLightStorage("./sqlite3.sql")
 
 	staticServer := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
 	muxer.HandleFunc("/", list.ListHandler(store))

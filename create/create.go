@@ -9,6 +9,9 @@ import (
 	"github.com/holgerspexet/holger-quotes/storage"
 )
 
+// CreateHandler returns a http.HandlerFunc
+// which retuns a form for creating quotes on GET
+// and creates adds a new quote to the storage system on POST
 func CreateHandler(store storage.Store) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		switch req.Method {
