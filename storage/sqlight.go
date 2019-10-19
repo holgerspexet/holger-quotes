@@ -5,19 +5,22 @@ import (
 	"log"
 	"time"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3" // db-driver
 )
 
+// SQLightStorage uses a sqlite3 db to store quoteInfo in
 type SQLightStorage struct {
 	path string
 }
 
+// NewSQLightStorage creates new SQLightStorage
 func NewSQLightStorage(path string) *SQLightStorage {
 	return &SQLightStorage{
 		path: path,
 	}
 }
 
+// Get fetches all QuoteInfo from the db
 func (ms SQLightStorage) Get() []QuoteInfo {
 	db := connect()
 	defer db.Close()
@@ -49,6 +52,7 @@ func (ms SQLightStorage) Get() []QuoteInfo {
 	return quotes
 }
 
+// Store inserts one new quote into the db
 func (ms *SQLightStorage) Store(quote QuoteInfo) {
 	db := connect()
 	defer db.Close()
@@ -56,7 +60,6 @@ func (ms *SQLightStorage) Store(quote QuoteInfo) {
 	tx, err := db.Begin()
 	checkErr(err)
 
-	// stmt, err := tx.Prepare("INSERT INTO Quotes(Quote, Who, Where, When) VALUES(?, ?, ?, ?)")
 	stmt, err := tx.Prepare("INSERT INTO Quotes(Quote, Who, Location, Time) VALUES(?, ?, ?, ?)")
 	checkErr(err)
 	defer stmt.Close()
