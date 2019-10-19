@@ -5,7 +5,7 @@
       height: calc(100vh - 95px);
     }
   </style>
-  <form class="form-box mx-auto" action="/ny" method="POST" autocomplete="off">
+  <form class="form-box mx-auto" action='{{call .Join .Hosting "ny"}}' method="POST" autocomplete="off">
     <div class="pb-2">
       <label for="quote">Citatet</label>
       <textarea id="quote" name="quote" rows="5" required></textarea>

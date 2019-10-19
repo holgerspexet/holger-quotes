@@ -1,25 +1,31 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"path"
 
+	"github.com/holgerspexet/holger-quotes/config"
 	"github.com/holgerspexet/holger-quotes/create"
 	"github.com/holgerspexet/holger-quotes/list"
 	"github.com/holgerspexet/holger-quotes/storage"
 )
 
-var store storage.Store
-
 func main() {
+	config := config.LoadConfig()
 	muxer := http.NewServeMux()
-	store = storage.NewSQLightStorage("./sqlite3.sql")
+	store := storage.CreateStorage(config)
 
-	staticServer := http.StripPrefix("/static/", http.FileServer(http.Dir("./static")))
-	muxer.HandleFunc("/", list.ListHandler(store))
-	muxer.HandleFunc("/ny", create.CreateHandler(store))
-	muxer.Handle("/static/", staticServer)
+	base := config.Hosting
+	new := path.Join(base, "ny")
+	static := path.Join(base, "static") + "/"
 
-	log.Printf("Server running at: %d", 8080)
-	log.Fatal(http.ListenAndServe(":8080", muxer))
+	staticServer := http.StripPrefix(static, http.FileServer(http.Dir(config.StaticDir)))
+	muxer.HandleFunc(base, list.Handler(store, config.TemplateDir, config.Hosting))
+	muxer.HandleFunc(new, create.Handler(store, config.TemplateDir, config.Hosting))
+	muxer.Handle(static, staticServer)
+
+	log.Printf("Server running at: %d", config.Port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), muxer))
 }

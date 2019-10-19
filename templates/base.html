@@ -6,14 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Holger Sitat</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href='{{call .Join .Hosting "static" "styles.css" }}'>
 </head>
 
 <body class="bg-gray m-0">
   <header class="bg-purple text-center fixed" style="top: 0; left: 0; right: 0;">
-    <a class="page-width mx-auto flex justify-center" href="/">
+    <a class="page-width mx-auto flex justify-center" href="{{ .Hosting }}">
       <div class="inline-block pb-2 pt-2">
-        <img src="/static/logga-white-trans.png" alt="Logga" style="width: 139px; height: 75px;">
+        <img src='{{call .Join .Hosting "static" "logga-white-trans.png"}}' alt="Logga" style="width: 139px; height: 75px;">
       </div>
       <h1 class="inline-block text-white" style="margin-left: 8px;"> - Citat</h1>
     </a>
