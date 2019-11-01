@@ -27,7 +27,7 @@ type Config struct {
 // LoadConfig creates a new Config object from available ENV variables
 func LoadConfig() Config {
 	storageType := loadStorageType()
-	return Config{
+	config := Config{
 		Port:        loadPort(),
 		TemplateDir: loadTemplateDir(),
 		StaticDir:   loadStaticDir(),
@@ -35,6 +35,8 @@ func LoadConfig() Config {
 		SQLightPath: loadSQLightPath(storageType),
 		Hosting:     loadHosting(),
 	}
+	log.Printf("Config: %+v", config)
+	return config
 }
 
 func loadPort() int {
