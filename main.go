@@ -12,6 +12,17 @@ import (
 	"github.com/holgerspexet/holger-quotes/storage"
 )
 
+func requestLogger(targetMux http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Printf(
+			"%s %s",
+			r.Method,
+			r.RequestURI,
+		)
+		targetMux.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 	config := config.LoadConfig()
 	muxer := http.NewServeMux()
@@ -27,5 +38,5 @@ func main() {
 	muxer.Handle(static, staticServer)
 
 	log.Printf("Server running at: %d", config.Port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), muxer))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Port), requestLogger(muxer)))
 }

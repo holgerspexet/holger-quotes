@@ -33,12 +33,14 @@ func post(w http.ResponseWriter, req *http.Request, store storage.Store, hosting
 		return
 	}
 
-	store.Store(storage.QuoteInfo{
+	newQuote := storage.QuoteInfo{
 		Quote: strings.Join(req.Form["quote"], ""),
 		Who:   strings.Join(req.Form["who"], ""),
 		Where: strings.Join(req.Form["where"], ""),
 		When:  time.Now(),
-	})
+	}
+	store.Store(newQuote)
+	log.Printf("New quote: %+v", newQuote)
 	http.Redirect(w, req, hosting, http.StatusSeeOther)
 }
 
