@@ -3,9 +3,9 @@ package config
 import (
 	"log"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
+	"strings"
 )
 
 // StorageTypeMemory is the storage type for memory storage
@@ -109,7 +109,7 @@ func loadHosting() string {
 		log.Printf("No hosting provided, defaulting to: %s", hosting)
 	}
 	if hosting != "/" {
-		hosting = path.Clean(hosting)
+		hosting = strings.ReplaceAll(hosting, "//", "/")
 	}
 	return hosting
 }
