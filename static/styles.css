@@ -74,8 +74,13 @@ button {
     font-weight: bold;
 }
 
+.text-small {
+    font-size: 12px;
+}
+
 pre {
     white-space: pre-wrap;
+    font-size: 16px;
 }
 
 a {
