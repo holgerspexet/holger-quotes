@@ -25,7 +25,7 @@ func (ms SQLightStorage) Get() []QuoteInfo {
 	db := connect()
 	defer db.Close()
 
-	rows, err := db.Query("select * from Quotes")
+	rows, err := db.Query("select * from Quotes ORDER BY Time DESC")
 	checkErr(err)
 	defer rows.Close()
 
