@@ -22,7 +22,7 @@ func NewSQLightStorage(path string) *SQLightStorage {
 
 // Get fetches all QuoteInfo from the db
 func (ms SQLightStorage) Get() []QuoteInfo {
-	db := connect()
+	db := ms.connect()
 	defer db.Close()
 
 	rows, err := db.Query("select * from Quotes ORDER BY Time DESC")
@@ -54,7 +54,7 @@ func (ms SQLightStorage) Get() []QuoteInfo {
 
 // Store inserts one new quote into the db
 func (ms *SQLightStorage) Store(quote QuoteInfo) {
-	db := connect()
+	db := ms.connect()
 	defer db.Close()
 
 	tx, err := db.Begin()
@@ -70,9 +70,8 @@ func (ms *SQLightStorage) Store(quote QuoteInfo) {
 	tx.Commit()
 }
 
-func connect() *sql.DB {
-	// db, err := sql.Open("sqlite3", ":memory:")
-	db, err := sql.Open("sqlite3", "./sqlite3.sql")
+func (ms SQLightStorage) connect() *sql.DB {
+	db, err := sql.Open("sqlite3", ms.path)
 	checkErr(err)
 
 	checkErr(db.Ping())
