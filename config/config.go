@@ -17,8 +17,6 @@ const StorageTypeSQLight string = "sqlite"
 // Config holds all configuration values for the application
 type Config struct {
 	Port        int
-	TemplateDir string
-	StaticDir   string
 	StorageType string
 	SQLightPath string
 	Hosting     string
@@ -29,8 +27,6 @@ func LoadConfig() Config {
 	storageType := loadStorageType()
 	config := Config{
 		Port:        loadPort(),
-		TemplateDir: loadTemplateDir(),
-		StaticDir:   loadStaticDir(),
 		StorageType: storageType,
 		SQLightPath: loadSQLightPath(storageType),
 		Hosting:     loadHosting(),
@@ -51,30 +47,6 @@ func loadPort() int {
 		log.Fatal(err)
 	}
 	return port
-}
-
-func loadTemplateDir() string {
-	path := os.Getenv("HOLGER_QUOTES_TEMPLATE_DIR")
-	if path == "" {
-		path, _ = filepath.Abs("./templates")
-		log.Printf("No templateDir provided, defaulting to: %s", path)
-	}
-	if stat, err := os.Stat(path); err != nil || !stat.IsDir() {
-		log.Fatalf("Invalid templateDir: '%s'", path)
-	}
-	return path
-}
-
-func loadStaticDir() string {
-	path := os.Getenv("HOLGER_QUOTES_STATIC_DIR")
-	if path == "" {
-		path, _ = filepath.Abs("./static")
-		log.Printf("No staticDir provided, defaulting to: %s", path)
-	}
-	if stat, err := os.Stat(path); err != nil || !stat.IsDir() {
-		log.Fatalf("Invalid staticDir: '%s'", path)
-	}
-	return path
 }
 
 func loadStorageType() string {

@@ -1,11 +1,22 @@
 
+# Build and Run
+Run the project locally
+```
+go run main.go
+```
+
+Build the project
+```
+go generate ./...               // this bundles static files and templates
+go build -tags release main.go
+```
+
+
 # Configuration
 
 | Variable                   | default       | comments                                                         |
 |----------------------------|---------------|------------------------------------------------------------------|
 | HOLGER_QUOTES_PORT         | 9000          | The port of the http server                                      |
-| HOLGER_QUOTES_TEMPLATE_DIR | ./templates   | A path to the directory containing the templates                 |
-| HOLGER_QUOTES_STATIC_DIR   | ./static      | A path to the directory containing static assets                 |
 | HOLGER_QUOTES_STORAGE_TYPE | sqlite        | Type of storage (memory, sqlite)                                 |
 | HOLGER_QUOTES_SQLIGHT_PATH | ./sqlite3.sql | Path to the sqlite3 storage file                                 |
 | HOLGER_QUOTES_HOSTING      | /             | The base URI at which the site is hosted                         |
