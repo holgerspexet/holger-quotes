@@ -11,6 +11,27 @@ go generate ./...               // this bundles static files and templates
 go build -tags release main.go
 ```
 
+# CI
+Continues integration is run with github-actions.
+Configurations can be found in .github/workflows/release.yml
+
+## Releases
+On each successfull push to the master branch a new release is automatically created
+
+The version of this new release is one patch above the previously:
+`2.5.7 => 2.5.8`
+
+If, hoverver, the commit message contains `#major` or `#minor`, the corresponding version is bumped instead.
+```
+"Increase #major"       2.5.7 => 3.0.0
+"Increase #minor"       2.5.7 => 2.6.0
+```
+
+## Atrifacts
+The binary for each release can be found as an atrifact with the name holger-quotes. It is created with `GOOS=linux` `GOARCH=amd64`.
+
+This link can be used to download the binary from the latest build
+https://github.com/holgerspexet/holger-quotes/releases/latest/download/holger-quotes
 
 # Configuration
 
