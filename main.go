@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,6 +14,20 @@ import (
 	"github.com/holgerspexet/holger-quotes/storage"
 )
 
+// This should be overridden with the build flag '-ldflags "-X main.version=<version>"'
+var version = "unset"
+
+func main() {
+	versionFlag := flag.Bool("version", false, "Prints binary version")
+	flag.Parse()
+	if *versionFlag {
+		fmt.Print(version)
+		return
+	}
+
+	startServer()
+}
+
 func requestLogger(targetMux http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		log.Printf(
@@ -24,7 +39,7 @@ func requestLogger(targetMux http.Handler) http.Handler {
 	})
 }
 
-func main() {
+func startServer() {
 	config := config.LoadConfig()
 	muxer := http.NewServeMux()
 	store := storage.CreateStorage(config)
