@@ -13,6 +13,9 @@ jobs:
       with:
         go-version: '1.13'
 
+    - name: Generate go code
+      run: go generate ./...
+
     - name: Test
       run: go test -tags release
 
@@ -25,7 +28,7 @@ jobs:
         RELEASE_BRANCHES: master
 
     - name: Build
-      run: go generate ./... && go build -tags release -o holger-quotes -ldflags "-X main.version=${{ steps.bump_version.outputs.new_tag }}" main.go
+      run: go build -tags release -o holger-quotes -ldflags "-X main.version=${{ steps.bump_version.outputs.new_tag }}" main.go
       env:
         GOOS: linux
         GOARCH: amd64
